@@ -1,17 +1,19 @@
-name: CI
+# .github/workflows/build-docker-image.yml
+name: build-docker-image
 
-on: [push]
+on: release
 
 jobs:
-  build:
-
+  build-docker-image:
+    name: Build and upload docker image
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v2
-    - name: Run a one-line script
-      run: echo Hello, world!
-    - name: Run a multi-line script
-      run: |
-        echo Add other actions to build,
-        echo test, and deploy your project.
+      - name: Pull source
+        uses: actions/checkout@v1
+
+      - name: Upload to release
+        uses: JasonEtco/upload-to-release@master
+        with:
+          args: 123.epf
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUBTOKEN }}
